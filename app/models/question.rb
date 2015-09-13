@@ -30,5 +30,5 @@ class Question < ActiveRecord::Base
   has_one :author,
     through: :poll,
     source: :author
-
+    
 end

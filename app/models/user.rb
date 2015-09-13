@@ -21,8 +21,8 @@ class User < ActiveRecord::Base
     foreign_key: :responder_id,
     primary_key: :id
 
-  # has_many :questions,
-  #   through: :authored_polls,
-  #   source: :questions
+  has_many :questions,
+    through: :authored_polls,
+    source: :questions
 
 end

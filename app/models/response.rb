@@ -29,6 +29,10 @@ class Response < ActiveRecord::Base
     through: :answer_choice,
     source: :question
 
+  has_one :poll,
+    through: :question,
+    source: :poll
+
   def sibling_responses
     question.responses.where(":id IS NULL OR responses.id != :id", id: id)
   end
@@ -41,7 +45,10 @@ class Response < ActiveRecord::Base
   end
 
   def author_cannot_respond_to_own_poll
-    if question.author == responder_id
+                        # what's goin on here?
+                        # issues with getting poll from response?
+    if respondent == poll.author
+
       errors[:poll_author] << "author cannot respond to own poll"
     end
   end

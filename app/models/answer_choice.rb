@@ -22,5 +22,5 @@ class AnswerChoice < ActiveRecord::Base
     class_name: "Response",
     foreign_key: :answer_choice_id,
     primary_key: :id
-
+    
 end
