@@ -12,8 +12,8 @@
 class Response < ActiveRecord::Base
   validates :answer_choice_id, presence: true
   validates :responder_id, presence: true
-  validate :respondent_has_not_already_answered_question
-  validate :author_cannot_respond_to_own_poll
+  validate :respondent_has_not_already_responded
+  validate :respondend_is_not_poll_author
 
   belongs_to :respondent,
     class_name: "User",
@@ -38,17 +38,14 @@ class Response < ActiveRecord::Base
   end
 
   private
-  def respondent_has_not_already_answered_question
+  def respondent_has_not_already_responded
     if sibling_responses.exists?(responder_id: responder_id)
       errors[:respondent] << "respondent already answered question"
     end
   end
 
-  def author_cannot_respond_to_own_poll
-                        # what's goin on here?
-                        # issues with getting poll from response?
-    if respondent == poll.author
-
+  def respondend_is_not_poll_author
+    if respondent == question.author
       errors[:poll_author] << "author cannot respond to own poll"
     end
   end
